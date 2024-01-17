@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lemon&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Salsa&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #050505;
+            background: #464646;
+            scroll-behavior: smooth;
+            scrollbar-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        #mainTop {
+            width: 100%;
+            height: 60vh;
+            background: url("https://cdn.pixabay.com/photo/2024/01/05/14/00/ship-8489583_1280.jpg") no-repeat center/cover;
+        }
+
+        #mainTopContent {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(#00000020, #000000f3);
+            padding: 1.2vw 2vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            nav {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        #logoContainer {
+            font-size: 3.5vw;
+            font-family: 'Lemon', serif;
+            color: white;
+        }
+        #navRight{
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+        }
+        #search{
+            filter: drop-shadow(0 0 5px #00000050);
+            display: flex;
+            input{
+                width: 25vw;
+                height: 5vh;
+                border-top-left-radius: 13px;
+                border-bottom-left-radius: 13px;
+                border: none;
+                outline: none;
+                background: #fdffcabc;
+                padding-left: 1.3vw;
+                font-size: 1.2vw;
+                /* width: 0; */
+                transition: all 0.5s;
+            }
+            span{
+                width: 4vw;
+                height: 5vh;
+                background: #fdffcabc;
+                color: rgb(73, 109, 1);
+                display: grid;
+                place-items: center;
+                font-size: 1.4vw;
+                border-left: 1px solid #0000002d;
+                border-top-right-radius: 13px;
+                border-bottom-right-radius: 13px;
+                cursor: pointer;
+            }
+            span:hover{
+                color: red;
+            }
+            span:active{
+                font-size: 1.2vw;
+                transition: all 0.3s;
+            }
+        }
+        #signup, #signup::after {
+            width: 8vw;
+            height: 6vh;
+            cursor: pointer;
+            box-shadow: inset -2px -2px #625f1a, inset 2px 2px #999432, 2px 2px 7px #0000005f;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.2vw;
+            border: none;
+            border-radius: 5px;
+            display: grid;
+            place-items: center;
+            background: #807939;
+            position: relative;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        #signup::before {
+            content: "";
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.2vw;
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            transition: all 0.6s;
+            translate: -100px 50px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: #6e6830;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        #signup::after{
+            content: "SignUp";
+            position: absolute;
+            background: transparent;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        #signup:hover::before {
+            opacity: 1;
+            translate: 0;
+        }
+        #signup:active{
+            transform: scale(0.9);
+        }
+        #content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 6vh;
+            h1 {
+                color: #fff;
+                font-family: 'Salsa', cursive;
+                font-size: 3vw;
+                letter-spacing: 0.6px;
+                margin-top: 2vw;
+            }
+
+            p {
+                color: #c3c3c3;
+                width: 65%;
+                text-align: center;
+                font-family: 'Barlow', sans-serif;
+            }
+        }
+
+        #main {
+            width: 100vw;
+            min-height: 80vh;
+            /* overflow-y: auto; */
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: #fff;
+            gap: 35px;
+            padding: 35px;
+        }
+        .image {
+            /* width: 100%; */
+            /* width: 20vw; */
+            height: 15vw;
+            border-radius: 5px;
+            overflow: hidden;
+            /* box-shadow: 3px 3px 4px rgb(24, 24, 24); */
+            box-shadow: 5px 5px 10px #868686,
+             -5px -5px 10px #ffffff;
+            /* outline: 1px solid #8a8a8a;
+            outline-offset: 5px; */
+            position: relative;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .image::after{
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(#00000000, #000000cf);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .image:hover::after{
+            opacity: 1;
+        }
+        .image:hover{
+            img{
+                scale: 1.1;
+                transition: scale 0.4s;
+            }
+        }
+        @media (max-width: 380px){
+            #logoContainer{
+                font-size: 8vw;
+            }
+            #search{
+                position: absolute;
+                top: 40%;
+                left: 12%;
+                input{
+                    width: 60vw;
+                    font-size: 3vw;
+                    padding-left: 3vw;
+                }
+                span{
+                    width: 14vw;
+                    font-size: 5vw;
+                }
+            }
+            #signup, #signup::after{
+                width: 26vw;
+                height: 5vh;
+                font-size: 4.2vw;
+            }
+            #content{
+                margin-top: 12vh;
+                h1{
+                    font-size: 7vw;
+                }
+                p{
+                    font-size: 3.6vw;
+                }
+            }
+            #main{
+                padding: 10px;
+                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .image{
+                height: 35vw;
+                box-shadow: 1px 1px 1px #868686,
+             -1px -1px 1px #ffffff;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mainTop">
+        <div id="mainTopContent">
+            <nav>
+                <div id="logoContainer">Figury</div>
+                <div id="navRight">
+                    <div id="search">
+                        <input type="search" placeholder="Search Images">
+                        <span>
+                            <i class="ri-search-line"></i>
+                        </span>
+                    </div>
+                    <button id="signup">SignUp</button>
+                </div>
+            </nav>
+            <div id="content">
+                <h1>Stunning images for free</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est quibusdam earum nemo doloribus totam.
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio sed dolorum eos sunt! Eligendi?</p>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <!-- <div class="image">
+            <img loading="lazy" class="img" src="images/1159896.jpg" alt="">
+        </div> -->
+    </div>
+
+    <script>
+        let url = "https://pixabay.com/api/?per_page=80";
+        let key = "35326174-5eb3231f7a6df3893990b2954";
+    
+        let createImageElement = (imageUrl, imageHeight) => {
+            let imageDiv = document.createElement("div");
+            imageDiv.className = "image";
+    
+            let imgElement = document.createElement("img");
+            imgElement.className = "img";
+            imgElement.loading = "lazy"
+            imgElement.src = imageUrl;
+            imgElement.alt = "";
+    
+            imageDiv.appendChild(imgElement);
+            return imageDiv;
+        }
+    
+        let clearMainContainer = () => {
+            let mainContainer = document.getElementById("main");
+            mainContainer.innerHTML = "";
+        }
+    
+        let removeExcessContainers = (numContainersNeeded) => {
+            let mainContainer = document.getElementById("main");
+            let currentContainers = mainContainer.children.length;
+    
+            // Remove excess containers
+            for (let i = currentContainers - 1; i >= numContainersNeeded; i--) {
+                mainContainer.removeChild(mainContainer.children[i]);
+            }
+        }
+    
+        let searchImages = async (query) => {
+            clearMainContainer();
+            let response = await fetch(`${url}&key=${key}&q=${query}`);
+            let data = await response.json();
+    
+            let mainContainer = document.getElementById("main");
+    
+            data.hits.forEach(hit => {
+                let imageUrl = hit.largeImageURL;
+                let imageHeight = hit.previewHeight;
+                let imageElement = createImageElement(imageUrl, imageHeight);
+                mainContainer.appendChild(imageElement);
+            });
+    
+            removeExcessContainers(data.hits.length);
+        }
+    
+        let getImage = async () => {
+            let response = await fetch(`${url}&key=${key}`);
+            let data = await response.json();
+            console.log(data)
+            let mainContainer = document.getElementById("main");
+    
+            data.hits.forEach(hit => {
+                let imageUrl = hit.largeImageURL;
+                let imageHeight = hit.previewHeight;
+                let imageElement = createImageElement(imageUrl, imageHeight);
+                mainContainer.appendChild(imageElement);
+            });
+    
+            removeExcessContainers(data.hits.length);
+        }
+    
+        getImage(); // Load default images
+    
+        // Add click event listener to the search icon
+        document.getElementById("search").addEventListener("click", function () {
+            let query = this.querySelector("input").value.trim();
+            if (query !== "") {
+                searchImages(query);
+            } else {
+                clearMainContainer();
+                getImage(); // Load default images if the search box is empty
+            }
+        });
+    </script>
+    
+</body>
+
+</html>
